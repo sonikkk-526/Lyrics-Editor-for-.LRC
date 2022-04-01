@@ -4,6 +4,8 @@ import com.lrc.componenet.Time_Modifier;
 import java.awt.Color;
 import com.lrc.componenet.EventSwitchSelected;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -25,6 +27,7 @@ public class Editor_Form extends javax.swing.JPanel {
         setOpaque(false);
         timeTextField.setEditable(false);
         merge_option1.setEnabled(false);
+        outputs.setEditable(false);
         switches();
         
         merge.getMergeLyricsInputs().addKeyListener(new java.awt.event.KeyAdapter() {
@@ -41,7 +44,7 @@ public class Editor_Form extends javax.swing.JPanel {
      * @return String Array with the inputs
      */
     private String[] readStringLyrics() {
-        return inputs.getText().toString().replace(System.getProperty("line.separator"), "\\n").split("\\n");
+        return inputs.getText().replace(System.getProperty("line.separator"), "\\n").split("\\n");
     }
     
     /**
@@ -81,7 +84,7 @@ public class Editor_Form extends javax.swing.JPanel {
         genHeader_switch.addEventSelected(new EventSwitchSelected() {
             @Override
             public void onSelected(boolean isOn) {
-                isTagGenOn = (isOn) ? true : false;
+                isTagGenOn = isOn;
                 outputWriter();
             }
         });
@@ -110,7 +113,7 @@ public class Editor_Form extends javax.swing.JPanel {
             results += editor.headerTag_gen();
         }
         
-        if (isTimeEditOn || isMergeOn) { // generate results (timestamp editing)
+        if (isTimeEditOn || isMergeOn) { // generate results (timestamp editing)           
             int counter = 1;
             for (String line : readStringLyrics()) {
                 String timestamp;
@@ -119,11 +122,11 @@ public class Editor_Form extends javax.swing.JPanel {
                     timestamp = editor.extract_timestamp(line);
                 } catch (NullPointerException nE) { // catch whether a timestamp is missing
                     outputs.setForeground(Color.RED);
-                    outputs.setText(String.format("Missing timestamp: line %d. Please check your inputs.", counter));
+                    outputs.setText(String.format("Missing timestamp: line %d.\n\nPlease check your inputs.", counter));
                     return -1;
                 } catch (IllegalArgumentException iE) { // catch whether a timestamp is incorrect format
                     outputs.setForeground(Color.red);
-                    outputs.setText(String.format("Incorrect timestamp formatting: line %d. Please check your inputs.", counter));
+                    outputs.setText(String.format("Incorrect timestamp formatting: line %d.\n\nPlease check your inputs.", counter));
                     return -1;
                 }
                 
@@ -131,23 +134,38 @@ public class Editor_Form extends javax.swing.JPanel {
                 double seconds = (double) editor.time2seconds(timestamp) + Double.parseDouble(timeTextField.getText());
                 if (isMergeOn) {
                     String temp = editor.getMergeLine(merge, counter-1);
-                    if (temp.equals("-1")) { // Guard clause to catch empty merge input here: (return -1;)
+                    
+                    try {
+                        editor.extract_timestamp(temp);
                         outputs.setForeground(Color.RED);
-                        outputs.setText("Missing Merge Lyrics. Please check your merge lyrics inputs.");
+                        outputs.setText("Check your Merge Lyrics.\n\nRemove timestamp or select \"Contains timestamp and remove\" option.");
                         return -1;
+                    } catch (NullPointerException e) {
+                        if (temp.equals("-1")) { // Catch empty merge input here
+                            outputs.setForeground(Color.RED);
+                            outputs.setText("Missing Merge Lyrics.\n\nPlease check your merge lyrics inputs.");
+                            return -1;
+                        }
+                        
+                        results += String.format("[%s]%s\n", editor.seconds2time(seconds), temp);
                     }
                     
-                    //System.out.println(editor.getMergeLine(merge, counter-1));
-                    results += String.format("[%s]%s\n", editor.seconds2time(seconds), temp);
+                    /*
+                    
+                    */
                 } else {
                     results += String.format("[%s]%s\n", editor.seconds2time(seconds), line.substring(line.indexOf("]")+1));
                 }
                 
                 counter++;
             }
+        } else {
+            for (String line : readStringLyrics()) {
+                results += String.format("%s%n", line);
+            }
         }
         
-        
+
         
         outputs.setText(results);
         outputs.setCaretPosition(0);
@@ -172,13 +190,15 @@ public class Editor_Form extends javax.swing.JPanel {
      * is (1) <= 8 (2) numbers and "." only (3) prefix == "-" or none
      */
     private void checkSecInputs() {
-        final int maxCharacters = 8;
+        final int MAX_CHAR = 8;
         AbstractDocument textarea = (AbstractDocument) timeTextField.getDocument();
         textarea.setDocumentFilter(new DocumentFilter() {
-            public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a) throws BadLocationException {
+            @Override
+            public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a)
+                    throws BadLocationException {
                 String in = fb.getDocument().getText(0, fb.getDocument().getLength());
                 in += str;
-                if ((fb.getDocument().getLength() + str.length() - length) <= maxCharacters && (in.matches("^[0-9-]+[.]?[0-9]{0,2}$") 
+                if ((fb.getDocument().getLength() + str.length() - length) <= MAX_CHAR && (in.matches("^[0-9-]+[.]?[0-9]{0,2}$") 
                         || in.substring(0, 1).matches("-")) && !in.substring(1).contains("-")) {
                     super.replace(fb, offs, length, str, a);
                     outputWriter();
@@ -187,10 +207,12 @@ public class Editor_Form extends javax.swing.JPanel {
                 }
             }
 
-            public void insertString(FilterBypass fb, int offs, String str, AttributeSet a) throws BadLocationException {
+            @Override
+            public void insertString(FilterBypass fb, int offs, String str, AttributeSet a)
+                    throws BadLocationException {
                 String in = fb.getDocument().getText(0, fb.getDocument().getLength());
                 in += str;
-                if ((fb.getDocument().getLength() + str.length()) <= maxCharacters && (in.matches("^[0-9-]+[.]?[0-9]{0,2}$") 
+                if ((fb.getDocument().getLength() + str.length()) <= MAX_CHAR && (in.matches("^[0-9-]+[.]?[0-9]{0,2}$") 
                         || in.substring(0, 1).equals("-")) && !in.substring(1).contains("-")) {
                     super.insertString(fb, offs, str, a);
                     outputWriter();
@@ -504,7 +526,7 @@ public class Editor_Form extends javax.swing.JPanel {
     private void inputsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputsKeyReleased
         outputWriter();
         
-        if (evt.getKeyChar() == evt.VK_CONTROL) { // why == not != ?
+        if (evt.getKeyChar() == KeyEvent.VK_CONTROL) { // why == not != ?
             inputs.setCaretPosition(0);
         }
     }//GEN-LAST:event_inputsKeyReleased

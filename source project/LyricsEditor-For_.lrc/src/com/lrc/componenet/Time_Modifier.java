@@ -37,7 +37,7 @@ public class Time_Modifier {
     /**
      * Extract the timestamp out of the line of lyrics.
      * @param timestamp A String that contains the line of lyrics.
-     * @return String (1) timestamp (2) 1, missing timestamp (3) 2, incorrect format
+     * @return String (1) timestamp (2) NullPointerException, missing timestamp (3) IllegalArgumentException, incorrect format
      */
     public String extract_timestamp(String lyricsLine) {
         Pattern timePattern = Pattern.compile("\\d{2}:\\d{2}.\\d{2}");

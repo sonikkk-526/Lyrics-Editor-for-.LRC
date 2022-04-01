@@ -10,6 +10,7 @@ public class Main extends javax.swing.JFrame {
     // instance variables
     private Home_Form home = new Home_Form();
     private Index_1 editor = new Index_1();
+    private Index_2 trim = new Index_2();
     private About_Form about = new About_Form();
     
     public Main() {
@@ -18,23 +19,12 @@ public class Main extends javax.swing.JFrame {
         setForm(new Home_Form()); // set home page/default page.
 
         menu.initMoving(this);
-        menu.addEventMenuSelected(new EventMenuSelected() {
-            @Override
-            public void selected(int index) {
-                // System.out.println("Selected Index : " + index);
-                switch (index) {
-                    case 0:
-                        setForm(home);
-                        break;
-                    case 1:
-                        setForm(editor);
-                        break;
-                    case 2:
-                        setForm(about);
-                        break;
-                    default:
-                        break;
-                }
+        menu.addEventMenuSelected((int index) -> {
+            switch (index) {
+                case 0 -> setForm(home);
+                case 1 -> setForm(editor);
+                case 2 -> setForm(trim);
+                case 3 -> setForm(about);
             }
         });
     }

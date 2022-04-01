@@ -24,7 +24,7 @@ public class Menu extends javax.swing.JPanel {
     private void init() {
         list_menu.addItem(new Model_Menu("1", "Home", Model_Menu.MenuType.MENU));
         list_menu.addItem(new Model_Menu("2", "Lyrics Editor", Model_Menu.MenuType.MENU));
-        //list_menu.addItem(new Model_Menu("3", "Lyrics Trimming", Model_Menu.MenuType.MENU));
+        list_menu.addItem(new Model_Menu("3", "Lyrics Trimming", Model_Menu.MenuType.MENU));
         //list_menu.addItem(new Model_Menu("4", "Lyrics Download", Model_Menu.MenuType.MENU));
         //list_menu.addItem(new Model_Menu("5", "Settings", Model_Menu.MenuType.MENU));
         list_menu.addItem(new Model_Menu("6", "About Us", Model_Menu.MenuType.MENU));
@@ -46,7 +46,7 @@ public class Menu extends javax.swing.JPanel {
         titlebar.setOpaque(false);
 
         title_text.setForeground(new java.awt.Color(204, 204, 204));
-        title_text.setText("Version: Alpha 1.0a - Author: sonic.-");
+        title_text.setText("Version: v1.1.1 - Author: sonikk.-");
 
         icon.setBackground(new java.awt.Color(60, 60, 60));
         icon.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
