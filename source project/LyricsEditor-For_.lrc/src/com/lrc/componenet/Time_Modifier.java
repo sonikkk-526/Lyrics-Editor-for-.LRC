@@ -1,7 +1,6 @@
 package com.lrc.componenet;
 
 import java.util.regex.Pattern;
-import com.lrc.forms.Merge_Form;
 
 public class Time_Modifier {
     /**
@@ -22,13 +21,13 @@ public class Time_Modifier {
 
     /**
      * Convert the given milliseconds to .lrc format timestamp
-     * @param milliseconds A double that contains milliseconds (eg. 8366 ms)
-     * @returnp A string that contains the timestamp (eg. 01:23.66)
+     * @param seconds A double that contains milliseconds (eg. 8366 ms) 
+     * @return A string that contains the timestamp (eg. 01:23.66)
      */
     public String seconds2time(double seconds) { // eg. seconds = 83.66
         int minutes = (int) ((seconds >= 60) ? (seconds / 60) : 0);
 
-        String result = new String(String.format("%02d:%05.2f", minutes, seconds-(minutes * 60)));
+        String result = String.format("%02d:%05.2f", minutes, seconds-(minutes * 60));
 
         return result;
     }
@@ -36,13 +35,13 @@ public class Time_Modifier {
     
     /**
      * Extract the timestamp out of the line of lyrics.
-     * @param timestamp A String that contains the line of lyrics.
+     * @param lyricsLine A String that contains the line of lyrics.
      * @return String (1) timestamp (2) NullPointerException, missing timestamp (3) IllegalArgumentException, incorrect format
      */
     public String extract_timestamp(String lyricsLine) {
         Pattern timePattern = Pattern.compile("\\d{2}:\\d{2}.\\d{2}");
         
-        if (!(lyricsLine.contains("[") && lyricsLine.contains("]"))) {
+        if (!(lyricsLine.indexOf("[") == 0 && lyricsLine.contains("]"))) {
             throw new NullPointerException();
         }
         
@@ -56,16 +55,16 @@ public class Time_Modifier {
     
     /**
      * Extract each line of lyrics from the merge lyrics panel.
-     * @param merge Merge_Form
+     * @param mergeLyrics String[] Obtain an array that contains the merge lyrics
      * @param index int The index (location) of the line of lyrics you want to get
      * @return (1) The line of lyrics or (2) "No More Lyrics..." or (3) "-1", empty merge lyrics
      */
-    public String getMergeLine(Merge_Form merge, int index) { // new Merge_Form().getMergeLyrics()[element] !=
-        String result = "";
+    public String getMergeLine(String[] mergeLyrics, int index) { // new Merge_Form().getMergeLyrics()[element] !=
+        String result;
         try {
-            result = merge.getMergeLyrics()[index];
+            result = mergeLyrics[index];
             
-            if (result.equals("") && merge.getMergeLyrics().length == 1) result = "-1";
+            if (result.equals("") && mergeLyrics.length == 1) result = "-1";
         } catch (ArrayIndexOutOfBoundsException e) {
             result = "No More Lyrics...";
         }
@@ -74,10 +73,18 @@ public class Time_Modifier {
     }
     
     /**
-     * Generate Header titles: title, artist, length, [00:00.00] timestamp
-     * @return 4 Headers
+     * Generate .LRC file titles
+     * @return String Header titles: title, artist, length, [00:00.00] timestamp
      */
     public String headerTag_gen() {
         return String.format("[ti:]%n[ar:]%n[al:]%n[length:]%n[00:00.00]\"\"%n");
+    }
+    
+    /**
+     * Identify whether input contains a timestamp
+     * @return Boolean .contains() timestamp
+     */
+    public boolean containsTimestamp() {
+        return true;
     }
 }

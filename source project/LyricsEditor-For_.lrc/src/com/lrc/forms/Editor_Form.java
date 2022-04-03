@@ -4,8 +4,9 @@ import com.lrc.componenet.Time_Modifier;
 import java.awt.Color;
 import com.lrc.componenet.EventSwitchSelected;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -14,13 +15,16 @@ import javax.swing.text.DocumentFilter;
 
 public class Editor_Form extends javax.swing.JPanel {
     // instance and static variables
-    private Time_Modifier editor = new Time_Modifier();
+    private final Index_2 TRIM;
+    private final Time_Modifier EDITOR = new Time_Modifier();
+    private final Merge_Form MERGE;
     private static boolean isMergeOn, isTimeEditOn, isTagGenOn = false;
-    private Merge_Form merge;
+    
     
     // Constructor
-    public Editor_Form(Merge_Form merge) {
-        this.merge = merge;
+    public Editor_Form(Merge_Form MERGE, Index_2 TRIM) {
+        this.MERGE = MERGE;
+        this.TRIM = TRIM;
         
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
@@ -30,9 +34,16 @@ public class Editor_Form extends javax.swing.JPanel {
         outputs.setEditable(false);
         switches();
         
-        merge.getMergeLyricsInputs().addKeyListener(new java.awt.event.KeyAdapter() {
+        MERGE.getMergeLyricsInputs().addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 inputs.setCaretPosition(0);
+                outputWriter();
+            }
+        });
+        
+        merge_option1.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) { // if (e.getStateChange() == ItemEvent.SELECTED)
                 outputWriter();
             }
         });
@@ -92,7 +103,7 @@ public class Editor_Form extends javax.swing.JPanel {
     
     /**
      * Generate the outputs.
-     * @return int Exit status: 0, EXIT_SUCCESS; 
+     * @return int Exit status: 0, EXIT_SUCCESS; -1, EXIT_FAILURE.
      */
     protected int outputWriter() {
         outputs.setForeground(new Color(204, 204, 204));
@@ -110,16 +121,16 @@ public class Editor_Form extends javax.swing.JPanel {
         
         String results = "";
         if (isTagGenOn) { // generate tags
-            results += editor.headerTag_gen();
+            results += EDITOR.headerTag_gen();
         }
         
         if (isTimeEditOn || isMergeOn) { // generate results (timestamp editing)           
             int counter = 1;
             for (String line : readStringLyrics()) {
+                // formatting timestamp for output
                 String timestamp;
-                
-                try {
-                    timestamp = editor.extract_timestamp(line);
+                try { // grab the timestamp
+                    timestamp = EDITOR.extract_timestamp(line);
                 } catch (NullPointerException nE) { // catch whether a timestamp is missing
                     outputs.setForeground(Color.RED);
                     outputs.setText(String.format("Missing timestamp: line %d.\n\nPlease check your inputs.", counter));
@@ -129,34 +140,42 @@ public class Editor_Form extends javax.swing.JPanel {
                     outputs.setText(String.format("Incorrect timestamp formatting: line %d.\n\nPlease check your inputs.", counter));
                     return -1;
                 }
+                double seconds = (double) EDITOR.time2seconds(timestamp) + Double.parseDouble(timeTextField.getText());
                 
-                // continues to generate the outputs
-                double seconds = (double) editor.time2seconds(timestamp) + Double.parseDouble(timeTextField.getText());
-                if (isMergeOn) {
-                    String temp = editor.getMergeLine(merge, counter-1);
-                    
-                    try {
-                        editor.extract_timestamp(temp);
-                        outputs.setForeground(Color.RED);
-                        outputs.setText("Check your Merge Lyrics.\n\nRemove timestamp or select \"Contains timestamp and remove\" option.");
-                        return -1;
-                    } catch (NullPointerException e) {
-                        if (temp.equals("-1")) { // Catch empty merge input here
+                // determine whether timestamp should use original lyrics or merge lyrics
+                if (isMergeOn) { // do some code optimization here later
+                    if (merge_option1.isSelected()) {
+                        String temp = EDITOR.getMergeLine(TRIM.getTrimmedOutputs(), counter-1);
+                        try {
+                            EDITOR.extract_timestamp(temp);
+
+                            // if the above did not throw an exception (meaning: timestamp found)
+                            outputs.setForeground(Color.RED);
+                            outputs.setText("Check your Merge Lyrics.\n\nRemove timestamp or select \"Contains timestamp and remove\" option.");
+                            return -1;
+                        } catch (NullPointerException e) { // if there are no timestamp found (good for merging)
+                            if (temp.equals("-1")) { // catch empty merge input here
+                                outputs.setForeground(Color.RED);
+                                outputs.setText("Missing Trimmed Merging Lyrics.\n\nPlease check your trimmed lyrics inputs.");
+                                return -1;
+                            }                        
+                        }
+                        
+                        results += String.format("[%s]%s\n", EDITOR.seconds2time(seconds), temp);
+                    } else {
+                        String temp = EDITOR.getMergeLine(MERGE.getMergeLyrics(), counter-1);
+                        
+                        if (temp.equals("-1")) { // catch empty merge input here
                             outputs.setForeground(Color.RED);
                             outputs.setText("Missing Merge Lyrics.\n\nPlease check your merge lyrics inputs.");
                             return -1;
                         }
                         
-                        results += String.format("[%s]%s\n", editor.seconds2time(seconds), temp);
+                        results += String.format("[%s]%s\n", EDITOR.seconds2time(seconds), temp);
                     }
-                    
-                    /*
-                    
-                    */
-                } else {
-                    results += String.format("[%s]%s\n", editor.seconds2time(seconds), line.substring(line.indexOf("]")+1));
+                } else { // use original lyrics line
+                    results += String.format("[%s]%s\n", EDITOR.seconds2time(seconds), line.substring(line.indexOf("]")+1));
                 }
-                
                 counter++;
             }
         } else {
@@ -191,8 +210,8 @@ public class Editor_Form extends javax.swing.JPanel {
      */
     private void checkSecInputs() {
         final int MAX_CHAR = 8;
-        AbstractDocument textarea = (AbstractDocument) timeTextField.getDocument();
-        textarea.setDocumentFilter(new DocumentFilter() {
+        AbstractDocument textfield = (AbstractDocument) timeTextField.getDocument();
+        textfield.setDocumentFilter(new DocumentFilter() {
             @Override
             public void replace(FilterBypass fb, int offs, int length, String str, AttributeSet a)
                     throws BadLocationException {

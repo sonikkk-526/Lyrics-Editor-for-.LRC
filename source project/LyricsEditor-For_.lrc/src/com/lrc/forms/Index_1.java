@@ -8,12 +8,12 @@ public class Index_1 extends javax.swing.JPanel {
     private Editor_Form editorPage;
     private Merge_Form mergePage;
     
-    public Index_1() {
+    public Index_1(Index_2 trimPage) {
         initComponents();
         setOpaque(false);
         
         mergePage = new Merge_Form();
-        editorPage = new Editor_Form(mergePage);
+        editorPage = new Editor_Form(mergePage, trimPage);
         
         setForm(editorPage);
         

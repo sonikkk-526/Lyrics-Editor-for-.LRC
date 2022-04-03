@@ -1,6 +1,5 @@
 package com.lrc.main;
 
-import com.lrc.events.EventMenuSelected;
 import com.lrc.forms.*;
 
 import java.awt.Color;
@@ -9,8 +8,8 @@ import javax.swing.JComponent;
 public class Main extends javax.swing.JFrame {
     // instance variables
     private Home_Form home = new Home_Form();
-    private Index_1 editor = new Index_1();
     private Index_2 trim = new Index_2();
+    private Index_1 editor = new Index_1(trim);
     private About_Form about = new About_Form();
     
     public Main() {
