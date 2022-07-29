@@ -24,11 +24,15 @@ public class Time_Modifier {
      * @param seconds A double that contains milliseconds (eg. 8366 ms) 
      * @return A string that contains the timestamp (eg. 01:23.66)
      */
-    public String seconds2time(double seconds) { // eg. seconds = 83.66
+    public String seconds2time(double seconds, int centiDigits) { // eg. seconds = 83.66
         int minutes = (int) ((seconds >= 60) ? (seconds / 60) : 0);
-
-        String result = String.format("%02d:%05.2f", minutes, seconds-(minutes * 60));
-
+        
+        String result;
+        switch (centiDigits) {
+            case 3 -> result = String.format("%02d:%06.3f", minutes, seconds-(minutes * 60));
+            default -> result = String.format("%02d:%05.2f", minutes, seconds-(minutes * 60));
+        }
+        
         return result;
     }
 
@@ -39,7 +43,7 @@ public class Time_Modifier {
      * @return String (1) timestamp (2) NullPointerException, missing timestamp (3) IllegalArgumentException, incorrect format
      */
     public String extract_timestamp(String lyricsLine) {
-        Pattern timePattern = Pattern.compile("\\d{2}:\\d{2}.\\d{2}");
+        Pattern timePattern = Pattern.compile("\\d{2}:\\d{2}.\\d{2,3}");
         
         if (!(lyricsLine.indexOf("[") == 0 && lyricsLine.contains("]"))) {
             throw new NullPointerException();

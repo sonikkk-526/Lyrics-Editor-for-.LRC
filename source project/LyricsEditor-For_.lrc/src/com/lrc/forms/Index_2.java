@@ -1,5 +1,6 @@
 package com.lrc.forms;
 
+import com.lrc.events.EventSwitchSelected;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -10,13 +11,36 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import com.lrc.componenet.Time_Modifier;
 
+/*
+class Index_2_Updates extends com.lrc.forms.Editor_Form {
+    private final Index_2 TRIM = Index_2.getIndex_2Class();
+    
+    private void inputsKeyReleased(java.awt.event.KeyEvent evt) {                                   
+        outputWriter();
+        if (evt.getKeyChar() == KeyEvent.VK_CONTROL) { // why == not != ?
+            TRIM.getInputs().setCaretPosition(0);
+        }
+        
+        TRIM.trim_lyrics();
+    }
+}
+*/
+
 public class Index_2 extends javax.swing.JPanel {
     private final Time_Modifier EDITOR = new Time_Modifier();
+    private boolean isIgnoreOn;
     
     public Index_2() {
         initComponents();
         outputs.setEditable(false);
         checkSkipInputs();
+        
+        ignore_switch.addEventSelected(new EventSwitchSelected() {
+            @Override
+            public void onSelected(boolean isOn) {
+                isIgnoreOn = isOn;
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -29,18 +53,18 @@ public class Index_2 extends javax.swing.JPanel {
         input_prompt = new javax.swing.JLabel();
         output_prompt = new javax.swing.JLabel();
         ioPanel = new javax.swing.JPanel();
-        textAreaScroll1 = new com.lrc.componenet.TextAreaScroll();
-        inputs = new com.lrc.componenet.TextArea();
-        textAreaScroll2 = new com.lrc.componenet.TextAreaScroll();
-        outputs = new com.lrc.componenet.TextArea();
+        textAreaScroll1 = new com.lrc.ui.TextAreaScroll();
+        inputs = new com.lrc.ui.TextArea();
+        textAreaScroll2 = new com.lrc.ui.TextAreaScroll();
+        outputs = new com.lrc.ui.TextArea();
         jLabel1 = new javax.swing.JLabel();
         optionText = new javax.swing.JLabel();
         optionPanel = new javax.swing.JPanel();
-        occurTextField = new com.lrc.componenet.TextField();
+        occurTextField = new com.lrc.ui.TextField();
         ms_text = new javax.swing.JLabel();
         skipPrompt_text = new javax.swing.JLabel();
-        switchButton2 = new com.lrc.componenet.SwitchButton();
-        jLabel2 = new javax.swing.JLabel();
+        ignore_switch = new com.lrc.ui.SwitchButton();
+        ignore_timestamp_text = new javax.swing.JLabel();
 
         setOpaque(false);
 
@@ -176,27 +200,26 @@ public class Index_2 extends javax.swing.JPanel {
             optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(optionPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(ms_text)
-                        .addComponent(skipPrompt_text))
-                    .addComponent(occurTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(optionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(occurTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(skipPrompt_text)
+                    .addComponent(ms_text))
                 .addContainerGap())
         );
 
-        switchButton2.setBackground(new java.awt.Color(0, 204, 204));
+        ignore_switch.setBackground(new java.awt.Color(0, 204, 204));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Semilight", 1, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(165, 165, 165));
-        jLabel2.setText("Ignore Timestamps");
+        ignore_timestamp_text.setFont(new java.awt.Font("Segoe UI Semilight", 1, 20)); // NOI18N
+        ignore_timestamp_text.setForeground(new java.awt.Color(165, 165, 165));
+        ignore_timestamp_text.setText("Ignore Timestamps");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(headings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -207,19 +230,20 @@ public class Index_2 extends javax.swing.JPanel {
                                 .addComponent(output_prompt)
                                 .addGap(515, 515, 515))
                             .addComponent(ioPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(607, 607, 607)
-                        .addComponent(optionText)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(594, 594, 594)
+                                .addComponent(optionText))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(276, 276, 276)
+                                .addComponent(optionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(83, 83, 83)
+                                .addComponent(ignore_switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ignore_timestamp_text)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(311, 311, 311)
-                .addComponent(optionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
-                .addComponent(switchButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,16 +258,15 @@ public class Index_2 extends javax.swing.JPanel {
                 .addComponent(ioPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(optionText)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(optionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                    .addComponent(optionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(switchButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(28, 28, 28))
+                            .addComponent(ignore_timestamp_text)
+                            .addComponent(ignore_switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)))
+                .addGap(34, 34, 34))
         );
     }// </editor-fold>//GEN-END:initComponents
     /**
@@ -256,7 +279,7 @@ public class Index_2 extends javax.swing.JPanel {
         return result;
     }
     
-    private void trim_lyrcs() { // trim lyrics should be able to identify whether it contains lyrics or not
+    public void trim_lyrics() { // trim lyrics should be able to identify whether it contains lyrics or not
         String result = "";
         int skip_occur = Integer.parseInt(occurTextField.getText());
         
@@ -289,7 +312,7 @@ public class Index_2 extends javax.swing.JPanel {
                 in += str;
                 if ((fb.getDocument().getLength() + str.length() - length) <= MAX_CHAR && (in.matches("^[0-9]{0,3}"))) {
                     super.replace(fb, offs, length, str, a);
-                    trim_lyrcs();
+                    trim_lyrics();
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -302,7 +325,7 @@ public class Index_2 extends javax.swing.JPanel {
                 in += str;
                 if ((fb.getDocument().getLength() + str.length()) <= MAX_CHAR && (in.matches("^[0-9]{0,3}"))) {
                     super.insertString(fb, offs, str, a);
-                    trim_lyrcs();
+                    trim_lyrics();
                 } else {
                     Toolkit.getDefaultToolkit().beep();
                 }
@@ -311,16 +334,8 @@ public class Index_2 extends javax.swing.JPanel {
         });
     }
     
-    private void inputsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputsKeyReleased
-        if (evt.getKeyChar() == KeyEvent.VK_CONTROL) { // why == not != ?
-            inputs.setCaretPosition(0);
-        }
-        
-        trim_lyrcs();
-        
-        
-    }//GEN-LAST:event_inputsKeyReleased
     
+    /* Accessor Method */
     /**
      * Get a String array that contains all the merge lyrics.
      * @return String[] merge lyrics
@@ -328,25 +343,47 @@ public class Index_2 extends javax.swing.JPanel {
     public String[] getTrimmedOutputs() {
         return outputs.getText().split("\\n");
     }
+    
+    public boolean getIsIgnoreOn() {
+        return isIgnoreOn;
+    }
+    
+    /*
+    public com.lrc.componenet.TextArea getInputs() {
+        return inputs;
+    }
+    
+    public Index_2 getIndex_2Class() {
+        return this;
+    }
+    */
+    
+    private void inputsKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputsKeyReleased
+        if (evt.getKeyChar() == KeyEvent.VK_CONTROL) {
+            inputs.setCaretPosition(0);
+        }
+        
+        trim_lyrics();
+    }//GEN-LAST:event_inputsKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel form_logo;
     private javax.swing.JLabel form_title;
     private javax.swing.JPanel headings;
+    private com.lrc.ui.SwitchButton ignore_switch;
+    private javax.swing.JLabel ignore_timestamp_text;
     private javax.swing.JLabel input_prompt;
-    private com.lrc.componenet.TextArea inputs;
+    private com.lrc.ui.TextArea inputs;
     private javax.swing.JPanel ioPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel ms_text;
-    private com.lrc.componenet.TextField occurTextField;
+    private com.lrc.ui.TextField occurTextField;
     private javax.swing.JPanel optionPanel;
     private javax.swing.JLabel optionText;
     private javax.swing.JLabel output_prompt;
-    private com.lrc.componenet.TextArea outputs;
+    private com.lrc.ui.TextArea outputs;
     private javax.swing.JLabel skipPrompt_text;
-    private com.lrc.componenet.SwitchButton switchButton2;
-    private com.lrc.componenet.TextAreaScroll textAreaScroll1;
-    private com.lrc.componenet.TextAreaScroll textAreaScroll2;
+    private com.lrc.ui.TextAreaScroll textAreaScroll1;
+    private com.lrc.ui.TextAreaScroll textAreaScroll2;
     // End of variables declaration//GEN-END:variables
 }

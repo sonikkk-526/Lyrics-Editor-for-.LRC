@@ -14,15 +14,19 @@ public class Menu_Item extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
         
-        if (data.getType() == Model_Menu.MenuType.MENU) {
-            icon.setIcon(data.toIcon());
-            MenuName.setText(data.getName());
-        } else if (data.getType() == Model_Menu.MenuType.TITLE) {
-            icon.setText(data.getName());
-            icon.setFont(new Font("sansserif", Font.PLAIN, 12));
-            MenuName.setVisible(false);
-        } else {
+        if (null == data.getType()) {
             MenuName.setText("  ");
+        } else switch (data.getType()) {
+            case MENU -> {
+                icon.setIcon(data.toIcon());
+                MenuName.setText(data.getName());
+            }
+            case TITLE -> {
+                icon.setText(data.getName());
+                icon.setFont(new Font("sansserif", Font.PLAIN, 12));
+                MenuName.setVisible(false);
+            }
+            default -> MenuName.setText("  ");
         }
     }
     
