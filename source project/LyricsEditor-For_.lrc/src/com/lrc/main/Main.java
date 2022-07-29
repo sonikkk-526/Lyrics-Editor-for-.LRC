@@ -11,6 +11,7 @@ public class Main extends javax.swing.JFrame {
     private Index_2 trim = new Index_2();
     private Index_1 editor = new Index_1(trim);
     private About_Form about = new About_Form();
+    private Testing_Form test = new Testing_Form();
     
     public Main() {
         initComponents();
@@ -24,6 +25,7 @@ public class Main extends javax.swing.JFrame {
                 case 1 -> setForm(editor);
                 case 2 -> setForm(trim);
                 case 3 -> setForm(about);
+                case 4 -> setForm(test);
             }
         });
     }

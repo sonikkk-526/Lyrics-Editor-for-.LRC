@@ -1,5 +1,6 @@
-package com.lrc.componenet;
+package com.lrc.ui;
 
+import com.lrc.events.EventSwitchSelected;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;

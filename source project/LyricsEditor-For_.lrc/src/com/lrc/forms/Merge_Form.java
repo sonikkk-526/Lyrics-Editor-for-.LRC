@@ -11,8 +11,8 @@ public class Merge_Form extends javax.swing.JPanel {
     private void initComponents() {
 
         subPanel = new javax.swing.JPanel();
-        mergeLyricsPane = new com.lrc.componenet.TextAreaScroll();
-        mergeLyricsInputs = new com.lrc.componenet.TextArea();
+        mergeLyricsPane = new com.lrc.ui.TextAreaScroll();
+        mergeLyricsInputs = new com.lrc.ui.TextArea();
 
         setOpaque(false);
 
@@ -40,7 +40,7 @@ public class Merge_Form extends javax.swing.JPanel {
         );
         subPanelLayout.setVerticalGroup(
             subPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mergeLyricsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
+            .addComponent(mergeLyricsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -53,11 +53,11 @@ public class Merge_Form extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(subPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 236, Short.MAX_VALUE))
+                .addGap(0, 176, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
-    public com.lrc.componenet.TextArea getMergeLyricsInputs() {
+    public com.lrc.ui.TextArea getMergeLyricsInputs() {
         return mergeLyricsInputs;
     }
     
@@ -66,11 +66,11 @@ public class Merge_Form extends javax.swing.JPanel {
      * @return String Array with the inputs
      */
     public String[] getMergeLyrics() {
-        return mergeLyricsInputs.getText().toString().replace(System.getProperty("line.separator"), "\\n").split("\\n");
+        return mergeLyricsInputs.getText().replace(System.getProperty("line.separator"), "\\n").split("\\n");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.lrc.componenet.TextArea mergeLyricsInputs;
-    private com.lrc.componenet.TextAreaScroll mergeLyricsPane;
+    private com.lrc.ui.TextArea mergeLyricsInputs;
+    private com.lrc.ui.TextAreaScroll mergeLyricsPane;
     private javax.swing.JPanel subPanel;
     // End of variables declaration//GEN-END:variables
 }
