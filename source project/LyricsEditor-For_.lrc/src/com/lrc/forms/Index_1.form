@@ -19,7 +19,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="subPanel" pref="1266" max="32767" attributes="0"/>
+          <Component id="subPanel" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="headings" max="32767" attributes="0"/>
@@ -33,8 +33,7 @@
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Component id="headings" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="subPanel" min="-2" pref="871" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="subPanel" pref="877" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -93,7 +92,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.lrc.componenet.Combobox" name="pageSelectionBox">
+        <Component class="com.lrc.ui.Combobox" name="pageSelectionBox">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="2b" green="2b" red="2b" type="rgb"/>

@@ -1,4 +1,4 @@
-package com.lrc.componenet;
+package com.lrc.events;
 
 public interface EventSwitchSelected {
 

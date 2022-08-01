@@ -15,7 +15,7 @@ import org.json.JSONObject;
  */
 public class Updater {
     private static String[] latestVer;
-    private String[] currentVer = { "1.1.1" };
+    private String[] currentVer = { "1.2.0" };
 
     /**
      * Obtain the latest GitHub Lyrics Editor repository release tag name

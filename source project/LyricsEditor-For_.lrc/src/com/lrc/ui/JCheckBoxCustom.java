@@ -1,4 +1,4 @@
-package com.lrc.componenet;
+package com.lrc.ui;
 
 import java.awt.Color;
 import java.awt.Cursor;

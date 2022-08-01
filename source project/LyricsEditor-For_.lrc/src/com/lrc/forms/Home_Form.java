@@ -64,7 +64,7 @@ public class Home_Form extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(106, 106, 106));
-        jLabel5.setText("Author: sonic.-   For More Please Refer to the \"About Us\" Page");
+        jLabel5.setText("Author: sonic.-   For More Please Refer to the \"About\" Page");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(204, 0, 51));

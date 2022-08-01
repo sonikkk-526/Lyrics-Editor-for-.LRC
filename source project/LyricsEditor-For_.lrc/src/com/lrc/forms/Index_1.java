@@ -39,7 +39,7 @@ public class Index_1 extends javax.swing.JPanel {
         headings = new javax.swing.JPanel();
         form_title = new javax.swing.JLabel();
         form_logo = new javax.swing.JLabel();
-        pageSelectionBox = new com.lrc.componenet.Combobox();
+        pageSelectionBox = new com.lrc.ui.Combobox();
         subPanel = new javax.swing.JPanel();
 
         setOpaque(false);
@@ -93,7 +93,7 @@ public class Index_1 extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(subPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 1266, Short.MAX_VALUE)
+            .addComponent(subPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(headings, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,8 +105,7 @@ public class Index_1 extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(headings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(subPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 877, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -121,7 +120,7 @@ public class Index_1 extends javax.swing.JPanel {
     private javax.swing.JLabel form_logo;
     private javax.swing.JLabel form_title;
     private javax.swing.JPanel headings;
-    private com.lrc.componenet.Combobox pageSelectionBox;
+    private com.lrc.ui.Combobox pageSelectionBox;
     private javax.swing.JPanel subPanel;
     // End of variables declaration//GEN-END:variables
 }

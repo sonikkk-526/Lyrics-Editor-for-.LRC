@@ -1,4 +1,4 @@
-package com.lrc.componenet;
+package com.lrc.ui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -73,7 +73,7 @@ public class Combobox<E> extends JComboBox<E> {
     }
 
     public void addListener(ItemListener itemListener) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private class ComboUI extends BasicComboBoxUI {

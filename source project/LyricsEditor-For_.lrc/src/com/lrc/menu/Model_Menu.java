@@ -1,6 +1,5 @@
 package com.lrc.menu;
 
-import java.io.File;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
