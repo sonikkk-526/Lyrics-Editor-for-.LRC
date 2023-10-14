@@ -127,7 +127,7 @@ public class Editor_Form extends javax.swing.JPanel {
         outputs.setForeground(new Color(204, 204, 204));
         
         // checks whether the input textbox is empty (clear output textbox if so)
-        if (isInputEmpty()) { 
+        if (isInputEmpty()) {
             return 0; // guard clause
         }
         
@@ -140,7 +140,10 @@ public class Editor_Form extends javax.swing.JPanel {
         // generating results to be displayed in the output textbox
         String results = "";
         if ((isTagGenOn && !genHeader_option1.isSelected()) || isTimeEditOn || isMergeOn) { // generate results (timestamp editing)
+            // counter setted to 1 for human normal reading
             int counter = 1;
+            
+            int merge_counter = 0;
             
             if (isTagGenOn) {
                 results += EDITOR.headerTag_gen();
@@ -166,7 +169,15 @@ public class Editor_Form extends javax.swing.JPanel {
                 int centiDigits = timestamp.substring(timestamp.indexOf(".")+1).length();
                 // determine whether timestamp should use original lyrics or merge lyrics
                 if (isMergeOn) { // <- do some code optimization here later
-                    String temp_line = EDITOR.getMergeLine((merge_option1.isSelected() ? TRIM.getTrimmedOutputs() : MERGE.getMergeLyrics()), counter-1);
+                    String temp_line;
+                    // skipping animation (empty lyrics with only timestamp)
+                    // checks whether the input textbox is empty
+                    if (line.substring(line.indexOf("]")+1).equals("")) {
+                        temp_line = "";
+                    } else {
+                        temp_line = EDITOR.getMergeLine((merge_option1.isSelected() ? TRIM.getTrimmedOutputs() : MERGE.getMergeLyrics()), merge_counter++);
+                    }
+                    
                     try {
                         EDITOR.extract_timestamp(temp_line);
                         

@@ -96,7 +96,7 @@ public class About_Form extends javax.swing.JPanel {
         gitLink_text.setFont(new java.awt.Font("SansSerif", 2, 14)); // NOI18N
         gitLink_text.setForeground(new java.awt.Color(106, 106, 106));
         gitLink_text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        gitLink_text.setText("GitHub Link (incase of HyperLink does not work): https://github.com/FlashSonic526/LyricsEditor-for_.lrc");
+        gitLink_text.setText("GitHub Link (incase of HyperLink does not work): https://github.com/sonikkk-526/Lyrics-Editor-for-.LRC");
 
         copyright_text.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         copyright_text.setForeground(new java.awt.Color(106, 106, 106));

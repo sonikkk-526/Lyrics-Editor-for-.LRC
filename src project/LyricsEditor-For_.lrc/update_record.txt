@@ -1,0 +1,26 @@
+v1.2 update:
+[Bug Fixes]
+1. Auto-gen Header option skips checking (1) format and (2) timestamp
+2. No warning if failed to open the github page (redirect-link in about me)
+
+[Feature added]
+1. generate empty headers (just for copy and pasting into your .lrc)
+
+[doing rn]
+1. fix merge panel does not check for timestamp✔
+2. fix lyrics trimming update does not auto update output pane (warning & results) {!!!}
+3. ignore timestamps feature is not implemented in lyrics trimming feature
+4. Exception (runtime) when merge checking timestamp: centiseconds > 3 digits (java.lang.IllegalArgumentException)
+5. Show which line is causing the warning
+
+
+
+1. Review Inheritance, abstract
+2. check marker interface (empty interface), interface, and clone().
+https://www.geeksforgeeks.org/marker-interface-java/
+https://en.wikipedia.org/wiki/Marker_interface_pattern
+
+
+
+[11:11.11]a
+[22:22.22]b

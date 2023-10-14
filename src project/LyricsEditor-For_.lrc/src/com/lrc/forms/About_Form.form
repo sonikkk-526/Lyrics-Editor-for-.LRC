@@ -227,7 +227,7 @@
           <Color blue="6a" green="6a" red="6a" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="GitHub Link (incase of HyperLink does not work): https://github.com/FlashSonic526/LyricsEditor-for_.lrc"/>
+        <Property name="text" type="java.lang.String" value="GitHub Link (incase of HyperLink does not work): https://github.com/sonikkk-526/Lyrics-Editor-for-.LRC"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="copyright_text">

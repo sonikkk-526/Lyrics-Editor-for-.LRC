@@ -45,10 +45,12 @@ public class Time_Modifier {
     public String extract_timestamp(String lyricsLine) {
         Pattern timePattern = Pattern.compile("\\d{2}:\\d{2}.\\d{2,3}");
         
+        // when a timestamp is missing
         if (!(lyricsLine.indexOf("[") == 0 && lyricsLine.contains("]"))) {
             throw new NullPointerException();
         }
         
+        // when a timestamp is incorrect format
         String temp = lyricsLine.substring(lyricsLine.indexOf("[")+1, lyricsLine.indexOf("]"));
         if (!timePattern.matcher(temp).matches()) {
             throw new IllegalArgumentException();
@@ -81,7 +83,7 @@ public class Time_Modifier {
      * @return String Header titles: title, artist, length, [00:00.00] timestamp
      */
     public String headerTag_gen() {
-        return String.format("[ti:]%n[ar:]%n[al:]%n[length:]%n[00:00.00]\"\"%n");
+        return String.format("[ti:]%n[ar:]%n[al:]%n[length:]%n[00:00.00]《》%n");
     }
     
     /**

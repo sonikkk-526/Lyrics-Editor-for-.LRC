@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 
 public class Menu extends javax.swing.JPanel {
     private EventMenuSelected event;
+    private String headings;
+    private String version;
     
     public void addEventMenuSelected(EventMenuSelected event) {
         this.event = event;
@@ -16,6 +18,8 @@ public class Menu extends javax.swing.JPanel {
     }
     
     public Menu() {
+        version = "1.2.3";
+        headings = String.format("Version: v%s - Author: sonikk.-", version);
         initComponents();
         list_menu.setOpaque(false);
         init();
@@ -46,7 +50,7 @@ public class Menu extends javax.swing.JPanel {
         titlebar.setOpaque(false);
 
         title_text.setForeground(new java.awt.Color(204, 204, 204));
-        title_text.setText("Version: v1.2.0 - Author: sonikk.-");
+        title_text.setText(String.valueOf(headings));
 
         icon.setBackground(new java.awt.Color(60, 60, 60));
         icon.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

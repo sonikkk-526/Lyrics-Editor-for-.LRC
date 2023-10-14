@@ -22,8 +22,9 @@
 ## ■ About this program
 This is an open-sourced project that allows the user to easily modify and manage their .LRC (lyrics) files~!
   - Users need to download runtime on their computer before using the .JAR application. (At least for the current version)
-  - Current version: [v1.2.0](https://github.com/FlashSonic526/Lyrics-Editor-for-.LRC/releases/latest)
+  - [Latest version can be found here](https://github.com/FlashSonic526/Lyrics-Editor-for-.LRC/releases/latest)
 ![Lyrics Editor Screenshot](editor_showcase.png)
+_*For more information and .JAR installation, please refer to the [latest release note](https://github.com/FlashSonic526/Lyrics-Editor-for-.LRC/releases).*_
 
 Users should have a corresponding music player so that their lyrics files can be displayed (such as foobar2000, FiiO Music App, or others).
   - In general, your .LRC file and the song (.MP3/.FLAC/.WAV etc.) file should have the same name and be put under the same directory.
@@ -38,9 +39,7 @@ Users should have a corresponding music player so that their lyrics files can be
 2. Lyrics Trimming
    - Allow users to trim one or more languages if the lyrics they copied contain the original language and one or more translated languages of the song.
    - Also allow users to use their trimmed lyrics for merging lyrics.
-
-_*For more information and .JAR installation, please refer to the [latest release note](https://github.com/FlashSonic526/Lyrics-Editor-for-.LRC/releases).*_
-
+   
 
 ## ■ Download Instructions
 ### For the users of this program, you can:
@@ -62,6 +61,6 @@ This program is a portable application which means that it is a standalone execu
 _*Since it is a portable application, it may not show up in "Programs and Features".*_
 
 ## ■ License & Copyright
-Copyright (c) FlashSonic526.
+Copyright (c) sonikkk-526 (known as sonik.- and FlashSonic526).
 
 Licensed under the [BSD-4 Clause License](LICENSE).
