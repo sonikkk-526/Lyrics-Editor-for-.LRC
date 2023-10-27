@@ -30,6 +30,7 @@ Users should have a corresponding music player so that their lyrics files can be
   - In general, your .LRC file and the song (.MP3/.FLAC/.WAV etc.) file should have the same name and be put under the same directory.
   - For details, please refer to your music player lyrics display instruction/documentation.
 
+**Edit 10/26/2023: <ins>I am happy to announce that the first version of LRC Editor documentation is live!</ins> [Click here to visit it!](https://sonikkk-526.github.io/lrc-editor-docs/#/)**
 ## ■ Current features
 1. Lyrics Editor
    - (a) Lyrics Merging: Allow users to combine the original timestamp with a new lyrics line without much of a stretch.
